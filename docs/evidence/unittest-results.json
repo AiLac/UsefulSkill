@@ -1,0 +1,17 @@
+{
+  "recorded_at_utc": "2026-11-13T03:04:01.942460+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "test_markdown_toml_examples_parse (test_agent_creator_codex.DocumentationTests.test_markdown_toml_examples_parse) ... ok\ntest_bad_sandbox_container_does_not_crash (test_agent_creator_codex.ValidatorTests.test_bad_sandbox_container_does_not_crash) ... ok\ntest_bad_utf8_does_not_stop_batch (test_agent_creator_codex.ValidatorTests.test_bad_utf8_does_not_stop_batch) ... ok\ntest_capabilities_and_constraints_are_not_silently_accepted (test_agent_creator_codex.ValidatorTests.test_capabilities_and_constraints_are_not_silently_accepted) ... ok\ntest_deeply_nested_toml_does_not_stop_batch (test_agent_creator_codex.ValidatorTests.test_deeply_nested_toml_does_not_stop_batch) ... ok\ntest_duplicate_normalized_names (test_agent_creator_codex.ValidatorTests.test_duplicate_normalized_names) ... ok\ntest_empty_directory_is_reported_even_with_valid_input (test_agent_creator_codex.ValidatorTests.test_empty_directory_is_reported_even_with_valid_input) ... ok\ntest_feature_values_are_booleans (test_agent_creator_codex.ValidatorTests.test_feature_values_are_booleans) ... ok\ntest_ineffective_settings_warn_and_strict_fails (test_agent_creator_codex.ValidatorTests.test_ineffective_settings_warn_and_strict_fails) ... ok\ntest_invalid_toml (test_agent_creator_codex.ValidatorTests.test_invalid_toml) ... ok\ntest_minimal_and_internal_model (test_agent_creator_codex.ValidatorTests.test_minimal_and_internal_model) ... ok\ntest_missing_and_blank_metadata (test_agent_creator_codex.ValidatorTests.test_missing_and_blank_metadata) ... ok\ntest_missing_path_is_reported (test_agent_creator_codex.ValidatorTests.test_missing_path_is_reported) ... ok\ntest_nested_skills_rejects_bad_shapes (test_agent_creator_codex.ValidatorTests.test_nested_skills_rejects_bad_shapes) ... ok\ntest_nickname_constraints (test_agent_creator_codex.ValidatorTests.test_nickname_constraints) ... ok\ntest_overlap_paths_are_deduplicated (test_agent_creator_codex.ValidatorTests.test_overlap_paths_are_deduplicated) ... ok\ntest_role_layer_can_omit_standalone_metadata (test_agent_creator_codex.ValidatorTests.test_role_layer_can_omit_standalone_metadata) ... ok\ntest_role_layer_still_rejects_invalid_present_fields (test_agent_creator_codex.ValidatorTests.test_role_layer_still_rejects_invalid_present_fields) ... ok\ntest_short_chinese_instructions_and_different_filename_are_valid (test_agent_creator_codex.ValidatorTests.test_short_chinese_instructions_and_different_filename_are_valid) ... ok\ntest_supported_disables (test_agent_creator_codex.ValidatorTests.test_supported_disables) ... ok\ntest_symlink_alias_is_not_a_second_role (test_agent_creator_codex.ValidatorTests.test_symlink_alias_is_not_a_second_role) ... ok\ntest_unknown_key_requires_target_version_verification (test_agent_creator_codex.ValidatorTests.test_unknown_key_requires_target_version_verification) ... ok\ntest_wrong_optional_types_and_enums (test_agent_creator_codex.ValidatorTests.test_wrong_optional_types_and_enums) ... ok\n\n----------------------------------------------------------------------\nRan 23 tests in 4.545s\n\nOK\n"
+}

@@ -1,0 +1,316 @@
+{
+  "recorded_at_utc": "2026-11-13T03:02:14.821557+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "baseline_commit": "7376c94c1a991acf965eeb7c01c2a15dc4c5e7e1",
+  "baseline_validator_blob": "18c82f57f0dcb0ad7c47c7272071906cfad59c34",
+  "scope": "Local static validator behavior only. No Codex model calls or role-loading tests.",
+  "fixtures": {
+    "bad_utf8.toml": {
+      "hex": "fffe"
+    },
+    "sandbox_array/a.toml": {
+      "utf8": "name = \"a\"\ndescription = \"A test agent\"\ndeveloper_instructions = \"Read the requested evidence and return a concise, cited summary.\"\nsandbox_mode = []\n"
+    },
+    "unknown_field/a.toml": {
+      "utf8": "name = \"a\"\ndescription = \"A test agent\"\ndeveloper_instructions = \"Read the requested evidence and return a concise, cited summary.\"\n[constraints]\nmax_tool_calls = 50\n"
+    },
+    "wrong_skill_flag_type/a.toml": {
+      "utf8": "name = \"a\"\ndescription = \"A test agent\"\ndeveloper_instructions = \"Read the requested evidence and return a concise, cited summary.\"\n[skills]\ninclude_instructions = \"false\"\n"
+    },
+    "wrong_skills_type/a.toml": {
+      "utf8": "name = \"a\"\ndescription = \"A test agent\"\ndeveloper_instructions = \"Read the requested evidence and return a concise, cited summary.\"\nskills = false\n"
+    },
+    "wrong_features_type/a.toml": {
+      "utf8": "name = \"a\"\ndescription = \"A test agent\"\ndeveloper_instructions = \"Read the requested evidence and return a concise, cited summary.\"\nfeatures = \"disabled\"\n"
+    },
+    "invalid_verbosity_enum/a.toml": {
+      "utf8": "name = \"a\"\ndescription = \"A test agent\"\ndeveloper_instructions = \"Read the requested evidence and return a concise, cited summary.\"\nmodel_verbosity = \"impossible\"\n"
+    },
+    "wrong_model_type/a.toml": {
+      "utf8": "name = \"a\"\ndescription = \"A test agent\"\ndeveloper_instructions = \"Read the requested evidence and return a concise, cited summary.\"\nmodel = 123\n"
+    },
+    "valid_minimal/a.toml": {
+      "utf8": "name = \"a\"\ndescription = \"A test agent\"\ndeveloper_instructions = \"Read the requested evidence and return a concise, cited summary.\"\n"
+    }
+  },
+  "cases": [
+    {
+      "case": "valid_minimal",
+      "baseline": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/tmp/codex-agent-audit-7376/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/valid_minimal/a.toml",
+          "--strict"
+        ],
+        "exit_code": 0,
+        "stdout": "\n1 file(s), 0 error(s), 0 warning(s)\n",
+        "stderr": ""
+      },
+      "optimized": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/workspace/scratch/f61fed179cfa/UsefulSkill/skills/agent-creator-codex/scripts/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/valid_minimal/a.toml",
+          "--strict"
+        ],
+        "exit_code": 0,
+        "stdout": "\n1 file(s), 0 error(s), 0 warning(s)\nStatic checks only; target Codex loading, model availability and runtime behavior remain unverified.\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "wrong_model_type",
+      "baseline": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/tmp/codex-agent-audit-7376/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/wrong_model_type/a.toml",
+          "--strict"
+        ],
+        "exit_code": 0,
+        "stdout": "\n1 file(s), 0 error(s), 0 warning(s)\n",
+        "stderr": ""
+      },
+      "optimized": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/workspace/scratch/f61fed179cfa/UsefulSkill/skills/agent-creator-codex/scripts/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/wrong_model_type/a.toml",
+          "--strict"
+        ],
+        "exit_code": 1,
+        "stdout": "ERROR   /tmp/codex-agent-audit-7376/wrong_model_type/a.toml: `model` must be a string\n\n1 file(s), 1 error(s), 0 warning(s)\nStatic checks only; target Codex loading, model availability and runtime behavior remain unverified.\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "invalid_verbosity_enum",
+      "baseline": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/tmp/codex-agent-audit-7376/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/invalid_verbosity_enum/a.toml",
+          "--strict"
+        ],
+        "exit_code": 0,
+        "stdout": "\n1 file(s), 0 error(s), 0 warning(s)\n",
+        "stderr": ""
+      },
+      "optimized": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/workspace/scratch/f61fed179cfa/UsefulSkill/skills/agent-creator-codex/scripts/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/invalid_verbosity_enum/a.toml",
+          "--strict"
+        ],
+        "exit_code": 1,
+        "stdout": "ERROR   /tmp/codex-agent-audit-7376/invalid_verbosity_enum/a.toml: `model_verbosity` must be one of high, low, medium\n\n1 file(s), 1 error(s), 0 warning(s)\nStatic checks only; target Codex loading, model availability and runtime behavior remain unverified.\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "wrong_features_type",
+      "baseline": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/tmp/codex-agent-audit-7376/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/wrong_features_type/a.toml",
+          "--strict"
+        ],
+        "exit_code": 0,
+        "stdout": "\n1 file(s), 0 error(s), 0 warning(s)\n",
+        "stderr": ""
+      },
+      "optimized": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/workspace/scratch/f61fed179cfa/UsefulSkill/skills/agent-creator-codex/scripts/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/wrong_features_type/a.toml",
+          "--strict"
+        ],
+        "exit_code": 1,
+        "stdout": "ERROR   /tmp/codex-agent-audit-7376/wrong_features_type/a.toml: `features` must be a TOML table\n\n1 file(s), 1 error(s), 0 warning(s)\nStatic checks only; target Codex loading, model availability and runtime behavior remain unverified.\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "wrong_skills_type",
+      "baseline": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/tmp/codex-agent-audit-7376/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/wrong_skills_type/a.toml",
+          "--strict"
+        ],
+        "exit_code": 0,
+        "stdout": "\n1 file(s), 0 error(s), 0 warning(s)\n",
+        "stderr": ""
+      },
+      "optimized": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/workspace/scratch/f61fed179cfa/UsefulSkill/skills/agent-creator-codex/scripts/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/wrong_skills_type/a.toml",
+          "--strict"
+        ],
+        "exit_code": 1,
+        "stdout": "ERROR   /tmp/codex-agent-audit-7376/wrong_skills_type/a.toml: `skills` must be a TOML table\n\n1 file(s), 1 error(s), 0 warning(s)\nStatic checks only; target Codex loading, model availability and runtime behavior remain unverified.\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "wrong_skill_flag_type",
+      "baseline": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/tmp/codex-agent-audit-7376/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/wrong_skill_flag_type/a.toml",
+          "--strict"
+        ],
+        "exit_code": 0,
+        "stdout": "\n1 file(s), 0 error(s), 0 warning(s)\n",
+        "stderr": ""
+      },
+      "optimized": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/workspace/scratch/f61fed179cfa/UsefulSkill/skills/agent-creator-codex/scripts/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/wrong_skill_flag_type/a.toml",
+          "--strict"
+        ],
+        "exit_code": 1,
+        "stdout": "ERROR   /tmp/codex-agent-audit-7376/wrong_skill_flag_type/a.toml: `skills.include_instructions` must be a boolean\n\n1 file(s), 1 error(s), 0 warning(s)\nStatic checks only; target Codex loading, model availability and runtime behavior remain unverified.\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "unknown_field",
+      "baseline": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/tmp/codex-agent-audit-7376/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/unknown_field/a.toml",
+          "--strict"
+        ],
+        "exit_code": 1,
+        "stdout": "WARNING /tmp/codex-agent-audit-7376/unknown_field/a.toml: unknown key `constraints`\n\n1 file(s), 0 error(s), 1 warning(s)\n",
+        "stderr": ""
+      },
+      "optimized": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/workspace/scratch/f61fed179cfa/UsefulSkill/skills/agent-creator-codex/scripts/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/unknown_field/a.toml",
+          "--strict"
+        ],
+        "exit_code": 1,
+        "stdout": "WARNING /tmp/codex-agent-audit-7376/unknown_field/a.toml: `constraints` is not covered by this validator; verify the target Codex version; put workflow limits in developer_instructions; prose is not enforced quota\n\n1 file(s), 0 error(s), 1 warning(s)\nStatic checks only; target Codex loading, model availability and runtime behavior remain unverified.\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "sandbox_array",
+      "baseline": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/tmp/codex-agent-audit-7376/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/sandbox_array/a.toml",
+          "--strict"
+        ],
+        "exit_code": 1,
+        "stdout": "WARNING /tmp/codex-agent-audit-7376/sandbox_array/a.toml: `sandbox_mode` is ignored in a role file: the child uses the parent session's sandbox; start the parent with --sandbox\n",
+        "stderr": "Traceback (most recent call last):\n  File \"/tmp/codex-agent-audit-7376/validate-agent.py\", line 196, in <module>\n    sys.exit(main())\n             ^^^^^^\n  File \"/tmp/codex-agent-audit-7376/validate-agent.py\", line 189, in main\n    validate_file(f, names, res)\n  File \"/tmp/codex-agent-audit-7376/validate-agent.py\", line 143, in validate_file\n    if sandbox is not None and sandbox not in SANDBOX_MODES:\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: unhashable type: 'list'\n"
+      },
+      "optimized": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/workspace/scratch/f61fed179cfa/UsefulSkill/skills/agent-creator-codex/scripts/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/sandbox_array/a.toml",
+          "--strict"
+        ],
+        "exit_code": 1,
+        "stdout": "ERROR   /tmp/codex-agent-audit-7376/sandbox_array/a.toml: `sandbox_mode` must be a string\n\n1 file(s), 1 error(s), 0 warning(s)\nStatic checks only; target Codex loading, model availability and runtime behavior remain unverified.\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "unknown_default",
+      "baseline": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/tmp/codex-agent-audit-7376/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/unknown_field/a.toml"
+        ],
+        "exit_code": 0,
+        "stdout": "WARNING /tmp/codex-agent-audit-7376/unknown_field/a.toml: unknown key `constraints`\n\n1 file(s), 0 error(s), 1 warning(s)\n",
+        "stderr": ""
+      },
+      "optimized": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/workspace/scratch/f61fed179cfa/UsefulSkill/skills/agent-creator-codex/scripts/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/unknown_field/a.toml"
+        ],
+        "exit_code": 0,
+        "stdout": "WARNING /tmp/codex-agent-audit-7376/unknown_field/a.toml: `constraints` is not covered by this validator; verify the target Codex version; put workflow limits in developer_instructions; prose is not enforced quota\n\n1 file(s), 0 error(s), 1 warning(s)\nStatic checks only; target Codex loading, model availability and runtime behavior remain unverified.\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "same_file_via_dir_and_file",
+      "baseline": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/tmp/codex-agent-audit-7376/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/valid_minimal",
+          "/tmp/codex-agent-audit-7376/valid_minimal/a.toml",
+          "--strict"
+        ],
+        "exit_code": 1,
+        "stdout": "ERROR   /tmp/codex-agent-audit-7376/valid_minimal/a.toml: duplicate name `a` (also in /tmp/codex-agent-audit-7376/valid_minimal/a.toml)\n\n2 file(s), 1 error(s), 0 warning(s)\n",
+        "stderr": ""
+      },
+      "optimized": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/workspace/scratch/f61fed179cfa/UsefulSkill/skills/agent-creator-codex/scripts/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/valid_minimal",
+          "/tmp/codex-agent-audit-7376/valid_minimal/a.toml",
+          "--strict"
+        ],
+        "exit_code": 0,
+        "stdout": "\n1 file(s), 0 error(s), 0 warning(s)\nStatic checks only; target Codex loading, model availability and runtime behavior remain unverified.\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "invalid_utf8_then_valid",
+      "baseline": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/tmp/codex-agent-audit-7376/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/bad_utf8.toml",
+          "/tmp/codex-agent-audit-7376/valid_minimal/a.toml",
+          "--strict"
+        ],
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/tmp/codex-agent-audit-7376/validate-agent.py\", line 196, in <module>\n    sys.exit(main())\n             ^^^^^^\n  File \"/tmp/codex-agent-audit-7376/validate-agent.py\", line 189, in main\n    validate_file(f, names, res)\n  File \"/tmp/codex-agent-audit-7376/validate-agent.py\", line 106, in validate_file\n    data = tomllib.loads(path.read_text(encoding=\"utf-8\"))\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1028, in read_text\n    return f.read()\n           ^^^^^^^^\n  File \"<frozen codecs>\", line 322, in decode\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte\n"
+      },
+      "optimized": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "/workspace/scratch/f61fed179cfa/UsefulSkill/skills/agent-creator-codex/scripts/validate-agent.py",
+          "/tmp/codex-agent-audit-7376/bad_utf8.toml",
+          "/tmp/codex-agent-audit-7376/valid_minimal/a.toml",
+          "--strict"
+        ],
+        "exit_code": 1,
+        "stdout": "ERROR   /tmp/codex-agent-audit-7376/bad_utf8.toml: file is not valid UTF-8: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte\n\n2 file(s), 1 error(s), 0 warning(s)\nStatic checks only; target Codex loading, model availability and runtime behavior remain unverified.\n",
+        "stderr": ""
+      }
+    }
+  ]
+}

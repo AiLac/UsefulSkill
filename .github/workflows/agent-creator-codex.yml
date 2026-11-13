@@ -1,0 +1,41 @@
+name: Validate agent-creator-codex
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skills/agent-creator-codex/**'
+      - 'tests/**'
+      - '.github/workflows/agent-creator-codex.yml'
+  pull_request:
+    paths:
+      - 'skills/agent-creator-codex/**'
+      - 'tests/**'
+      - '.github/workflows/agent-creator-codex.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python: '3.11'
+          - os: windows-latest
+            python: '3.12'
+    runs-on: ${{ matrix.os }}
+    env:
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Run behavioral regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Validate the packaged example
+        run: python skills/agent-creator-codex/scripts/validate-agent.py skills/agent-creator-codex/assets/case-analyst.toml --strict
