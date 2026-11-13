@@ -1,9 +1,10 @@
 {
-  "recorded_at_utc": "2026-11-13T03:02:14.821557+00:00",
+  "recorded_at_utc": "2026-11-13T03:08:03.090833+00:00",
   "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
   "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
   "baseline_commit": "7376c94c1a991acf965eeb7c01c2a15dc4c5e7e1",
   "baseline_validator_blob": "18c82f57f0dcb0ad7c47c7272071906cfad59c34",
+  "optimized_validator_blob": "ed10f9a4e5232fb5b6e9ffab69f145dba65019af",
   "scope": "Local static validator behavior only. No Codex model calls or role-loading tests.",
   "fixtures": {
     "bad_utf8.toml": {

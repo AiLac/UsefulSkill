@@ -71,7 +71,19 @@ python skills/agent-creator-codex/scripts/validate-agent.py skills/agent-creator
 
 ## 5. GitHub 与剩余验证
 
-已配置 GitHub Actions，在 Linux / Python 3.11 和 Windows / Python 3.12 上运行回归与随包示例检查。该工作流会在代码上传后执行；在取得远端结果前，不把它列为通过。
+代码已提交至 `AiLac/UsefulSkill` 的 `main`：
+[2026c49e0c6f8026fc6092b2cc7bca9f345f8096](https://github.com/AiLac/UsefulSkill/commit/2026c49e0c6f8026fc6092b2cc7bca9f345f8096)。
+读取远端 Git tree 后，20 个交付文件的 blob SHA 全部与本地内容一致；另回读了 `SKILL.md` 内容。
+
+[GitHub Actions 运行 43356734862](https://github.com/AiLac/UsefulSkill/actions/runs/43356734862) 已完成，结论为 **success**：
+
+| 远端环境 | 实际 Python 版本 | 结果 |
+| --- | --- | --- |
+| ubuntu-latest | 3.11.18 | 23 个测试通过，随包示例严格检查通过 |
+| windows-latest | 3.12.10 | 23 个测试通过，随包示例严格检查通过 |
+
+两个任务的符号链接测试均实际通过，没有跳过。运行 ID、对应代码提交、步骤结果与关键日志摘录见
+[github-actions-results.json](evidence/github-actions-results.json)。后续补充的这份远端验证记录不修改技能或测试代码。
 
 以下项目仍需在用户的实际目标环境验证：
 
